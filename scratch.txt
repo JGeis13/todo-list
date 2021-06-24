@@ -1,0 +1,29 @@
+factoryFunctions > 
+- Task
+  - info
+
+- TaskList
+  - array of tasks
+  - addNew
+  - delete
+
+- Project
+  - info
+  - getTasks (taskList) - filter taskList for matching projects association
+
+- ProjectList
+  - array of projects
+  - addNew
+  - delete
+
+- Stats
+  - takes in projectLists and taskLists to calculate stats
+
+- do i need factories for array holders? can i just use consts ? 
+
+- UI
+  - Popup / Modal
+  - Task
+  - Folders Menu (projects)
+  - Stats Bar
+  - Content Area

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://kit.fontawesome.com/b6c8725600.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div id="app">
+      <nav
+        id="navbar"
+        class="
+          md:left-0
+          md:block
+          md:fixed
+          md:top-0
+          md:bottom-0
+          md:overflow-y-auto
+          md:flex-row md:flex-nowrap
+          md:overflow-hidden
+          md:w-64
+          shadow-xl
+          bg-white
+          flex flex-wrap
+          items-center
+          justify-between
+          relative
+          z-10
+          py-4
+          px-6
+        "
+      >
+        <div>
+          <span id="open-modal">Open Modal</span>
+          <!-- !! button (hamburger menu) -->
+          <span class="text-gray-400 uppercase text-lg block mb-8">Taskify</span>
+          <ul id="projects-box" class="flex flex-col md:min-w-full item-stretch">
+            <li class="hover:bg-gray-50">
+              <div class="w-full block">
+                <i class="fas fa-inbox"></i>
+                <span>Inbox</span>
+              </div>
+            </li>
+            <li class="hover:bg-gray-50">
+              <div class="w-full block">
+                <i class="fas fa-inbox"></i>
+                <span>Today</span>
+              </div>
+            </li>
+            <li class="hover:bg-gray-50">
+              <div class="w-full block">
+                <i class="fas fa-inbox"></i>
+                <span>Tomorrow</span>
+              </div>
+            </li>
+            <li>
+              <div class="w-full block">
+                <i class="fas fa-inbox"></i>
+                <span>Projects</span>
+              </div>
+
+              <ul id="user-projects">
+                <!-- Projects go here -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div id="content-box" class="flex flex-col md:h-screen relative md:ml-64 bg-blueGray-100">
+        <div id="dashboard" class="bg-blue-500 flex p-4">
+          <!-- Stat boxes go here -->
+          <div class="rounded bg-white p-4 shadow-sm">
+            <h5 class="text-gray-400 uppercase font-bold">Tasks</h5>
+            <span class="font-semibold text-xl text-gray-700">12</span>
+          </div>
+        </div>
+        <!-- Main Panel -->
+        <div id="main" class="flex-1 bg-gray-100 p-4">
+          <div id="main-panel" class="bg-white p-4 shadow-sm rounded">
+            <h5 class="text-center text-gray-400 pb-2">Project Title</h5>
+            <div class="border-b border-gray-200 pb-2">
+              <span>Tasks</span>
+            </div>
+            <div id="task-box" class="">
+              <!-- Tasks Go Here -->
+            </div>
+            <button class="w-full text-center p-2 mt-2 hover:bg-gray-50">+ Add New</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-10">
+        <div class="modal-overlay absolute bg-gray-500 w-full h-full opacity-50"></div>
+        <div class="modal-container p-6 rounded bg-white md:w-4/5 w-11/12 z-20 shadow-md">
+          <!-- modal form -->
+          <div class="border-b pb-2 border-gray-200 flex flex-wrap flex-col md:flex-row">
+            <!-- title -->
+            <div class="input-box flex flex-col py-1 md:w-2/4 md:pr-2">
+              <label for="task-title">Title:</label>
+              <input id="task-title" type="text" class="border px-2 py-1" />
+            </div>
+
+            <!-- due date -->
+            <div class="input-box flex flex-col py-1 md:w-2/4 md:pl-2">
+              <label for="task-due-date">Due Date:</label>
+              <input id="task-due-date" type="date" class="border px-2 py-1" />
+            </div>
+
+            <!-- note -->
+            <div class="input-box flex flex-col py-1 md:w-2/4 md:pr-2">
+              <label for="task-note">Note:</label>
+              <textarea id="task-note" rows="4" class="border px-2 py-1"></textarea>
+            </div>
+
+            <div class="md:w-2/4 md:pl-2">
+              <!-- priority -->
+              <div class="input-box flex flex-col py-1">
+                <label for="task-priority">Priority:</label>
+                <select id="task-priority" class="border px-2 py-1">
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+
+              <!-- project / inbox -->
+              <div class="input-box flex flex-col py-1">
+                <label for="task-project">Project:</label>
+                <select id="task-project" class="border px-2 py-1"></select>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-end mt-4">
+            <button id="cancel-modal-btn" class="p-2 px-4 hover:bg-gray-100 shadow-sm bg-gray-50 mr-4 text-gray-500 rounded">Cancel</button>
+            <button id="save-modal-btn" class="p-2 px-4 hover:bg-blue-600 shadow-sm bg-blue-500 text-white rounded">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="bundle.js" async defer></script>
+  </body>
+</html>

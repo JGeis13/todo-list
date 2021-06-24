@@ -1,0 +1,17 @@
+#app.modal-active {
+  overflow: hidden;
+}
+
+.modal {
+  transition: opacity 0.2s;
+}
+
+#user-projects li:before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: gray;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}

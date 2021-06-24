@@ -22,6 +22,9 @@ const UI = (storage) => {
     applyEventHandlers();
     // addTaskListHTML(taskList);
     appendProjectList(projectList);
+
+    // open inbox as default project
+    populateMainPanel(projectList.getProjectById("inbox"));
   }
 
   function buildTask({ title, note, dueDate, priority, id, complete, project }) {
@@ -35,7 +38,7 @@ const UI = (storage) => {
         ${note == "" || note == null ? "" : '<i class="far fa-comment"></i>'}
       </div>
       <div class="right flex items-center">
-        <span class="px-4">${inputDateToStringFormat(dueDate)}</span>
+        <span class="px-4">${dueDate == "" || dueDate == null ? "" : inputDateToStringFormat(dueDate)}</span>
         <i class="far fa-trash-alt opacity-0 group-hover:opacity-100 cursor-pointer"></i>
       </div>
     </div>
@@ -57,7 +60,6 @@ const UI = (storage) => {
     let html = ``;
 
     project.getAllTasks().forEach((task) => {
-      console.log(task);
       html += buildTask(task);
     });
 
@@ -85,21 +87,19 @@ const UI = (storage) => {
 
   function handleNavbarClicks(e) {
     // change the mainPanel display to show selected project (if it's the one already showing, do nothing)
-    if (e.target.dataset.projectid) {
-      let id = e.target.dataset.projectid;
-      console.log("clicked a user-project");
-      // find the project, then populate main panel
-      let proj = projectList.getProjectById(id);
-      populateMainPanel(proj);
+
+    if (e.target.dataset.projectid || e.target.parentElement.dataset.projectid) {
+      console.log(e.target);
+      console.log(e.target.parentElement);
+      // Clicked on a project
+      let id = e.target.dataset.projectid || e.target.parentElement.dataset.projectid;
+      populateMainPanel(projectList.getProjectById(id));
     }
 
     // ! Add handling for Inbox and Date Filters
   }
 
   function handleMainPanelClicks(e) {
-    console.log(e.target);
-    // Handle task click
-    //  - Handle task sub clicks (edit, complete, change date)
     if (e.target.dataset.id || e.target.parentElement.parentElement.dataset.id) {
       // Clicked somewhere on task element
       if (e.target.classList.contains("fa-trash-alt")) {
@@ -119,14 +119,40 @@ const UI = (storage) => {
         toggleModal();
       }
       // Handle exceptions for complete and delete clicks
+    } else if (e.target.tagName == "BUTTON") {
+      // Clicked on + Add New button
+      populateModal({ id: null, title: "", note: "", dueDate: null, priority: "low" });
+      // Open Modal
+      // Default priority
+      // Populate projects options
+      //    Default to the current project
+      toggleModal();
     }
-
-    // Handle add new
   }
 
   function handleSaveModal(e) {
     e.preventDefault();
     console.log("save task changes");
+    let info = getModalData();
+    console.log(info);
+    // required fields before saving
+    if (info.taskTitle == "") {
+      alert("Title cannot be blank");
+      return;
+    }
+    if (info.taskId == "null") {
+      // save a new task
+      projectList.getProjectById(info.taskProjectId).addTask({
+        title: info.taskTitle,
+        note: info.taskNote,
+        dueDate: info.taskDueDate,
+        priority: info.taskPriority,
+        project: info.taskProjectId,
+      });
+    } else {
+      // save changes for current task
+    }
+    populateMainPanel(projectList.getProjectById(info.taskProjectId)); // re-render tasks
     toggleModal();
     clearModal();
 
@@ -171,6 +197,24 @@ const UI = (storage) => {
     });
   }
 
+  function getModalData() {
+    const modalContainer = document.querySelector(".modal-container");
+    const titleEl = document.querySelector("#task-title");
+    const dateEl = document.querySelector("#task-due-date");
+    const noteEl = document.querySelector("#task-note");
+    const priorityEl = document.querySelector("#task-priority");
+    const projectEl = document.querySelector("#task-project");
+
+    return {
+      taskId: modalContainer.dataset.taskId,
+      taskTitle: titleEl.value,
+      taskDueDate: dateEl.value,
+      taskNote: noteEl.value,
+      taskPriority: priorityEl.value,
+      taskProjectId: projectEl.value,
+    };
+  }
+
   function clearModal() {
     const modalContainer = document.querySelector(".modal-container");
     const titleEl = document.querySelector("#task-title");
@@ -198,7 +242,7 @@ const UI = (storage) => {
     document.querySelector("#open-modal").addEventListener("click", toggleModal);
     document.querySelector("#cancel-modal-btn").addEventListener("click", handleCancelModal);
     document.querySelector("#save-modal-btn").addEventListener("click", handleSaveModal);
-    document.querySelector(".modal-overlay").addEventListener("click", toggleModal);
+    document.querySelector(".modal-overlay").addEventListener("click", handleCancelModal);
   }
 
   initialize();

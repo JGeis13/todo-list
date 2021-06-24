@@ -4,8 +4,9 @@ const Project = ({ name, id, tasks }) => {
   const _id = id || Math.random().toString(36).slice(2, 8);
   const _tasks = tasks || [];
 
-  function addTask({ title, note, dueDate, priority }) {
-    const task = Task({ title, note, dueDate, priority, project: name });
+  function addTask(taskData) {
+    let { title, note, dueDate = null, priority = "low", project = _id } = taskData;
+    const task = Task({ title, note, dueDate, priority, project });
     _tasks.push(task);
   }
 

@@ -15,9 +15,8 @@ const Storage = () => {
     // returns hydrated projectList from local storage or a new projectList with an inbox project only
     const projectList = ProjectList();
 
-    let projInbox = Project({ name: "inbox", id: "inbox" });
-    projInbox.addTask({ title: "Inbox item 1", note: "BLah blah", dueDate: new Date(2021, 5, 24) });
-    projectList.addProject(projInbox);
+    let projInbox = Project({ name: "Inbox", id: "inbox" });
+    projInbox.addTask({ title: "Inbox item 1", note: "BLah blah", dueDate: "2021-06-24" });
 
     let proj1 = Project({ name: "test proj 1" });
     let proj2 = Project({ name: "test proj 2" });
@@ -25,6 +24,7 @@ const Storage = () => {
     proj2.addTask({ title: "proj2 item 1", note: "BLah blah", dueDate: "2021-06-24" });
     proj2.addTask({ title: "proj2 item 2", dueDate: "2021-06-25" });
 
+    projectList.addProject(projInbox);
     projectList.addProject(proj1);
     projectList.addProject(proj2);
 

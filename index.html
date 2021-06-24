@@ -11,12 +11,13 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://kit.fontawesome.com/b6c8725600.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="" />
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    <div id="loader" class="text-gray-800 p-8">Loading...</div>
     <div id="app">
       <nav
         id="navbar"
@@ -46,29 +47,21 @@
           <!-- !! button (hamburger menu) -->
           <span class="text-gray-400 uppercase text-lg block mb-8">Taskify</span>
           <ul id="projects-box" class="flex flex-col md:min-w-full item-stretch">
-            <li class="hover:bg-gray-50">
-              <div class="w-full block">
-                <i class="fas fa-inbox"></i>
-                <span>Inbox</span>
-              </div>
+            <li data-projectid="inbox" class="inbox hover:bg-gray-50 w-full block">
+              <i class="fas fa-inbox"></i>
+              <span>Inbox</span>
             </li>
-            <li class="hover:bg-gray-50">
-              <div class="w-full block">
-                <i class="fas fa-inbox"></i>
-                <span>Today</span>
-              </div>
+            <li class="today-filter hover:bg-gray-50 w-full block">
+              <i class="fas fa-inbox"></i>
+              <span>Today</span>
             </li>
-            <li class="hover:bg-gray-50">
-              <div class="w-full block">
-                <i class="fas fa-inbox"></i>
-                <span>Tomorrow</span>
-              </div>
+            <li class="tomorrow-filter hover:bg-gray-50 w-full block">
+              <i class="fas fa-inbox"></i>
+              <span>Tomorrow</span>
             </li>
-            <li>
-              <div class="w-full block">
-                <i class="fas fa-inbox"></i>
-                <span>Projects</span>
-              </div>
+            <li class="w-full block">
+              <i class="fas fa-inbox"></i>
+              <span>Projects</span>
 
               <ul id="user-projects">
                 <!-- Projects go here -->
@@ -150,6 +143,17 @@
       </div>
     </div>
 
-    <script src="bundle.js" async defer></script>
+    <script>
+      document.onreadystatechange = function () {
+        if (document.readyState !== "complete") {
+          document.querySelector("body").style.visibility = "hidden";
+          document.querySelector("#loader").style.visibility = "visible";
+        } else {
+          document.querySelector("#loader").style.display = "none";
+          document.querySelector("body").style.visibility = "visible";
+        }
+      };
+    </script>
+    <script src="bundle.js"></script>
   </body>
 </html>

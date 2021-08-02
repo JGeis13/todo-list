@@ -2,7 +2,7 @@ import Task from "./task";
 
 const Project = ({ name, id, tasks }) => {
   const _id = id || Math.random().toString(36).slice(2, 8);
-  const _tasks = tasks || [];
+  let _tasks = tasks || [];
 
   function addTask(taskData) {
     let { title, note, dueDate = null, priority = "low", project = _id } = taskData;

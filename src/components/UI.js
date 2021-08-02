@@ -103,10 +103,17 @@ const UI = (storage) => {
     if (e.target.dataset.id || e.target.parentElement.parentElement.dataset.id) {
       // Clicked somewhere on task element
       if (e.target.classList.contains("fa-trash-alt")) {
-        // Delete Task
-        console.log("delete task");
+        // DELETE TASK
+        let projectId = e.target.parentElement.parentElement.parentElement.parentElement.dataset.currentProjectId;
+        let taskId = e.target.parentElement.parentElement.dataset.id;
+
+        projectList.getProjectById(projectId).deleteTaskById(taskId);
+
+        // re-render tasks after deletion
+        populateMainPanel(projectList.getProjectById(projectId));
       } else if (e.target.tagName == "INPUT") {
         // Complete Task
+
         console.log("complete task");
       } else {
         // Open modal with task info
